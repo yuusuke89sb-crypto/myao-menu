@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#1a1a2e">
+  <meta name="theme-color" content="#0f0f1a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>🐱 料理長みゃおの献立</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --bg-primary: #0f0f1a;
@@ -22,13 +24,11 @@
       --accent-orange-glow: rgba(255, 107, 53, 0.25);
       --accent-pink: #ff4d6d;
       --accent-green: #06d6a0;
-      --accent-green-dim: rgba(6, 214, 160, 0.15);
       --accent-blue: #4cc9f0;
       --accent-purple: #9b5de5;
       --accent-yellow: #ffd166;
-      --border-subtle: rgba(255,255,255,0.06);
-      --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
-      --shadow-glow: 0 0 20px rgba(255,107,53,0.15);
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
       --radius: 16px;
       --radius-sm: 10px;
       --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -38,7 +38,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+      -webkit-tap-highlight-color: transparent
     }
 
     body {
@@ -47,75 +47,122 @@
       color: var(--text-primary);
       min-height: 100dvh;
       overflow-x: hidden;
-      padding-bottom: 80px;
+      padding-bottom: 20px
     }
 
-    /* ===== Header ===== */
+    ::-webkit-scrollbar {
+      width: 0
+    }
+
+    /* Header */
     .header {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
       border-bottom: 1px solid var(--border-subtle);
       backdrop-filter: blur(20px);
-      padding: 16px 20px 12px;
+      padding: 14px 16px 10px
     }
 
     .header-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 10px
     }
 
     .header-title {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px
     }
 
-    .header-title .cat-icon {
-      font-size: 28px;
-      animation: catBounce 2s ease-in-out infinite;
+    .header-title .cat {
+      font-size: 24px;
+      animation: catBounce 2s ease-in-out infinite
     }
 
     @keyframes catBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-3px)
+      }
     }
 
     .header-title h1 {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background-clip: text
     }
 
-    .header-week {
-      font-size: 12px;
+    .header-month {
+      font-size: 11px;
       color: var(--text-muted);
       background: var(--bg-primary);
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: 20px;
-      font-weight: 500;
+      font-weight: 500
     }
 
-    /* ===== Tabs ===== */
+    /* Week selector */
+    .week-selector {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 10px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none
+    }
+
+    .week-selector::-webkit-scrollbar {
+      display: none
+    }
+
+    .week-btn {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-primary);
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap
+    }
+
+    .week-btn.active {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 2px 12px rgba(155, 93, 229, 0.3)
+    }
+
+    /* Tabs */
     .tabs {
       display: flex;
-      gap: 6px;
+      gap: 4px
     }
 
     .tab-btn {
       flex: 1;
-      padding: 10px 0;
+      padding: 8px 0;
       border: none;
       background: var(--bg-primary);
       color: var(--text-muted);
       font-family: inherit;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       border-radius: var(--radius-sm);
       cursor: pointer;
@@ -123,254 +170,278 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px
     }
 
     .tab-btn.active {
       background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
       color: #fff;
-      box-shadow: 0 4px 16px var(--accent-orange-glow);
+      box-shadow: 0 4px 16px var(--accent-orange-glow)
     }
 
     .tab-btn .badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 20px;
-      height: 20px;
-      padding: 0 6px;
-      border-radius: 10px;
-      font-size: 11px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 5px;
+      border-radius: 9px;
+      font-size: 10px;
       font-weight: 700;
-      background: rgba(255,255,255,0.15);
+      background: rgba(255, 255, 255, 0.15)
     }
 
     .tab-btn.active .badge {
-      background: rgba(255,255,255,0.25);
+      background: rgba(255, 255, 255, 0.25)
     }
 
-    /* ===== Page Container ===== */
+    /* Pages */
     .page {
       display: none;
-      padding: 16px;
-      animation: fadeIn 0.3s ease;
+      padding: 14px;
+      animation: fadeIn 0.3s ease
     }
 
     .page.active {
-      display: block;
+      display: block
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(6px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
     }
 
-    /* ===== Menu Page ===== */
+    /* Day cards */
     .day-card {
       background: var(--bg-card);
       border-radius: var(--radius);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       overflow: hidden;
       border: 1px solid var(--border-subtle);
-      transition: var(--transition);
-    }
-
-    .day-card:active {
-      transform: scale(0.98);
+      transition: var(--transition)
     }
 
     .day-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
+      padding: 12px 14px;
       cursor: pointer;
-      user-select: none;
+      user-select: none
     }
 
     .day-header-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px
     }
 
     .day-emoji {
-      font-size: 28px;
-      width: 44px;
-      height: 44px;
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: var(--bg-primary);
-      border-radius: 12px;
+      border-radius: 10px
     }
 
     .day-info h3 {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
-      margin-bottom: 2px;
+      margin-bottom: 1px
     }
 
     .day-info .day-subtitle {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-secondary);
-      font-weight: 400;
+      font-weight: 400
+    }
+
+    .day-tag {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-weight: 700;
+      margin-left: 6px
+    }
+
+    .day-tag.洋食 {
+      background: rgba(255, 107, 53, 0.2);
+      color: var(--accent-orange)
+    }
+
+    .day-tag.和食 {
+      background: rgba(6, 214, 160, 0.15);
+      color: var(--accent-green)
+    }
+
+    .day-tag.中華 {
+      background: rgba(255, 209, 102, 0.2);
+      color: var(--accent-yellow)
     }
 
     .day-chevron {
       color: var(--text-muted);
-      font-size: 18px;
-      transition: var(--transition);
+      font-size: 16px;
+      transition: var(--transition)
     }
 
     .day-card.open .day-chevron {
-      transform: rotate(180deg);
+      transform: rotate(180deg)
     }
 
     .day-body {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1)
     }
 
     .day-card.open .day-body {
-      max-height: 800px;
+      max-height: 800px
     }
 
     .day-menu {
-      padding: 0 16px 16px;
+      padding: 0 14px 14px
     }
 
     .menu-item {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      padding: 10px 12px;
+      gap: 8px;
+      padding: 8px 10px;
       background: var(--bg-primary);
       border-radius: var(--radius-sm);
-      margin-bottom: 6px;
+      margin-bottom: 5px
     }
 
     .menu-icon {
-      font-size: 18px;
+      font-size: 16px;
       flex-shrink: 0;
-      width: 28px;
+      width: 24px;
       text-align: center;
-      margin-top: 1px;
+      margin-top: 1px
     }
 
     .menu-content {
-      flex: 1;
+      flex: 1
     }
 
     .menu-label {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 2px;
+      margin-bottom: 1px
     }
 
     .menu-name {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.4
     }
 
     .menu-name .highlight {
-      color: var(--accent-orange);
+      color: var(--accent-orange)
     }
 
     .menu-detail {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-secondary);
-      margin-top: 2px;
-      line-height: 1.4;
+      margin-top: 1px
     }
 
     .nutrition-badge {
-      margin-top: 10px;
-      padding: 10px 12px;
-      background: linear-gradient(135deg, rgba(6,214,160,0.08), rgba(76,201,240,0.08));
+      margin-top: 8px;
+      padding: 8px 10px;
+      background: linear-gradient(135deg, rgba(6, 214, 160, 0.08), rgba(76, 201, 240, 0.08));
       border-radius: var(--radius-sm);
-      border-left: 3px solid var(--accent-green);
+      border-left: 3px solid var(--accent-green)
     }
 
     .nutrition-badge p {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--accent-green);
       font-weight: 500;
-      line-height: 1.5;
+      line-height: 1.5
     }
 
     .special-note {
-      margin-top: 8px;
-      padding: 10px 12px;
-      background: rgba(255,209,102,0.08);
+      margin-top: 6px;
+      padding: 8px 10px;
+      background: rgba(255, 209, 102, 0.08);
       border-radius: var(--radius-sm);
       border-left: 3px solid var(--accent-yellow);
-      font-size: 12px;
+      font-size: 11px;
       color: var(--accent-yellow);
-      line-height: 1.5;
+      line-height: 1.5
     }
 
-    /* ===== Shopping Page ===== */
+    /* Shopping */
     .shop-progress {
       background: var(--bg-card);
       border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 16px;
-      border: 1px solid var(--border-subtle);
+      padding: 14px;
+      margin-bottom: 14px;
+      border: 1px solid var(--border-subtle)
     }
 
     .progress-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px
     }
 
     .progress-label {
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 600
     }
 
     .progress-count {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--accent-green);
-      font-weight: 700;
+      font-weight: 700
     }
 
     .progress-bar {
-      height: 8px;
+      height: 6px;
       background: var(--bg-primary);
-      border-radius: 4px;
-      overflow: hidden;
+      border-radius: 3px;
+      overflow: hidden
     }
 
     .progress-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
-      border-radius: 4px;
-      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      width: 0%;
+      border-radius: 3px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1)
     }
 
     .shop-actions {
       display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
+      gap: 6px;
+      margin-bottom: 14px
     }
 
     .action-btn {
       flex: 1;
-      padding: 10px;
+      padding: 8px;
       border: 1px solid var(--border-subtle);
       background: var(--bg-card);
       color: var(--text-secondary);
       font-family: inherit;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       border-radius: var(--radius-sm);
       cursor: pointer;
@@ -378,54 +449,49 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px
     }
 
     .action-btn:active {
-      transform: scale(0.96);
-    }
-
-    .action-btn.danger {
-      border-color: rgba(255,77,109,0.3);
-      color: var(--accent-pink);
+      transform: scale(0.96)
     }
 
     .shop-category {
-      margin-bottom: 14px;
+      margin-bottom: 12px
     }
 
     .category-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
+      padding: 8px 12px;
       background: var(--bg-card);
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
       border: 1px solid var(--border-subtle);
       border-bottom: none;
       cursor: pointer;
-      user-select: none;
+      user-select: none
     }
 
     .category-header-left {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px
     }
 
     .category-emoji {
-      font-size: 20px;
+      font-size: 18px
     }
 
     .category-title {
-      font-size: 14px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 700
     }
 
     .category-count {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
-      font-weight: 500;
+      font-weight: 500
     }
 
     .category-items {
@@ -433,291 +499,229 @@
       border-radius: 0 0 var(--radius-sm) var(--radius-sm);
       border: 1px solid var(--border-subtle);
       border-top: none;
-      overflow: hidden;
+      overflow: hidden
     }
 
     .shop-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
+      gap: 10px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--border-subtle);
       cursor: pointer;
       user-select: none;
-      transition: var(--transition);
+      transition: var(--transition)
     }
 
     .shop-item:last-child {
-      border-bottom: none;
+      border-bottom: none
     }
 
     .shop-item:active {
-      background: var(--bg-card-hover);
+      background: var(--bg-card-hover)
     }
 
     .shop-item.checked {
-      opacity: 0.45;
+      opacity: 0.4
     }
 
     .shop-item.checked .item-name {
-      text-decoration: line-through;
+      text-decoration: line-through
     }
 
     .checkbox {
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
       border: 2px solid var(--text-muted);
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: var(--transition);
+      transition: var(--transition)
     }
 
     .shop-item.checked .checkbox {
       background: var(--accent-green);
-      border-color: var(--accent-green);
+      border-color: var(--accent-green)
     }
 
     .checkbox svg {
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
       stroke: white;
       stroke-width: 3;
       fill: none;
       opacity: 0;
       transform: scale(0.5);
-      transition: var(--transition);
+      transition: var(--transition)
     }
 
     .shop-item.checked .checkbox svg {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(1)
     }
 
     .item-info {
       flex: 1;
-      min-width: 0;
+      min-width: 0
     }
 
     .item-name {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
-      transition: var(--transition);
+      transition: var(--transition)
     }
 
     .item-qty {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-secondary);
-      margin-top: 1px;
+      margin-top: 1px
     }
 
     .item-day {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
       background: var(--bg-primary);
-      padding: 2px 8px;
+      padding: 2px 6px;
       border-radius: 6px;
-      flex-shrink: 0;
-      white-space: nowrap;
+      flex-shrink: 0
     }
 
-    /* ===== Budget Page ===== */
+    /* Budget */
     .budget-card {
       background: var(--bg-card);
       border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 14px;
-      border: 1px solid var(--border-subtle);
+      padding: 18px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border-subtle)
     }
 
     .budget-total {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 16px
     }
 
     .budget-total .label {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
       font-weight: 500;
-      margin-bottom: 4px;
+      margin-bottom: 2px
     }
 
     .budget-total .amount {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: 700;
       background: linear-gradient(135deg, var(--accent-yellow), var(--accent-orange));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
+      background-clip: text
     }
 
     .budget-breakdown {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px
     }
 
     .budget-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px
     }
 
     .budget-row .icon {
-      font-size: 18px;
-      width: 36px;
-      height: 36px;
+      font-size: 16px;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: var(--bg-primary);
       border-radius: 8px;
-      flex-shrink: 0;
+      flex-shrink: 0
     }
 
     .budget-row .name {
       flex: 1;
-      font-size: 13px;
-      font-weight: 500;
+      font-size: 12px;
+      font-weight: 500
     }
 
     .budget-row .price {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
-      color: var(--accent-yellow);
+      color: var(--accent-yellow)
     }
 
     .budget-bar {
-      height: 4px;
+      height: 3px;
       background: var(--bg-primary);
       border-radius: 2px;
       overflow: hidden;
-      margin-top: 6px;
+      margin-top: 4px
     }
 
     .budget-bar-fill {
       height: 100%;
-      border-radius: 2px;
-      transition: width 0.6s ease;
+      border-radius: 2px
     }
 
-    /* ===== Schedule Tips ===== */
     .tip-card {
       background: var(--bg-card);
       border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 14px;
-      border: 1px solid var(--border-subtle);
+      padding: 14px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border-subtle)
     }
 
     .tip-card h4 {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px
     }
 
     .schedule-item {
       display: flex;
-      gap: 12px;
-      margin-bottom: 12px;
-      padding: 10px 12px;
+      gap: 10px;
+      margin-bottom: 10px;
+      padding: 8px 10px;
       background: var(--bg-primary);
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-sm)
     }
 
     .schedule-item:last-child {
-      margin-bottom: 0;
+      margin-bottom: 0
     }
 
     .schedule-day {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--accent-blue);
       white-space: nowrap;
-      min-width: 70px;
+      min-width: 65px
     }
 
     .schedule-desc {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-secondary);
-      line-height: 1.5;
+      line-height: 1.5
     }
 
-    /* ===== Bottom Nav ===== */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: var(--bg-card);
-      border-top: 1px solid var(--border-subtle);
-      display: flex;
-      padding: 8px 16px;
-      padding-bottom: max(8px, env(safe-area-inset-bottom));
-      backdrop-filter: blur(20px);
-    }
-
-    .nav-btn {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 6px 0;
-      border: none;
-      background: none;
-      color: var(--text-muted);
-      font-family: inherit;
-      font-size: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .nav-btn .nav-icon {
-      font-size: 22px;
-      transition: var(--transition);
-    }
-
-    .nav-btn.active {
-      color: var(--accent-orange);
-    }
-
-    .nav-btn.active .nav-icon {
-      transform: scale(1.15);
-    }
-
-    /* ===== Scrollbar ===== */
-    ::-webkit-scrollbar { width: 0; }
-
-    /* ===== Animations ===== */
-    @keyframes checkPop {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-
-    .check-animate {
-      animation: checkPop 0.3s ease;
-    }
-
-    /* ===== Toast ===== */
+    /* Toast & Animations */
     .toast {
       position: fixed;
-      bottom: 90px;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%) translateY(20px);
       background: var(--bg-card);
       color: var(--text-primary);
-      padding: 10px 20px;
+      padding: 8px 18px;
       border-radius: 30px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       box-shadow: var(--shadow-card);
       border: 1px solid var(--border-subtle);
@@ -725,470 +729,238 @@
       pointer-events: none;
       transition: all 0.3s ease;
       z-index: 200;
-      white-space: nowrap;
+      white-space: nowrap
     }
 
     .toast.show {
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      transform: translateX(-50%) translateY(0)
+    }
+
+    @keyframes checkPop {
+      0% {
+        transform: scale(1)
+      }
+
+      50% {
+        transform: scale(1.2)
+      }
+
+      100% {
+        transform: scale(1)
+      }
+    }
+
+    .check-animate {
+      animation: checkPop 0.3s ease
     }
   </style>
 </head>
-<body>
 
-  <!-- Header -->
+<body>
   <div class="header">
     <div class="header-top">
-      <div class="header-title">
-        <span class="cat-icon">🐱</span>
+      <div class="header-title"><span class="cat">🐱</span>
         <h1>料理長みゃおの献立</h1>
       </div>
-      <span class="header-week">3月 第1週</span>
+      <span class="header-month">2026年3月</span>
     </div>
+    <div class="week-selector" id="weekSelector"></div>
     <div class="tabs">
       <button class="tab-btn active" data-tab="menu">🍽️ 献立</button>
       <button class="tab-btn" data-tab="shop">🛒 買い物 <span class="badge" id="shopBadge">0</span></button>
       <button class="tab-btn" data-tab="info">💰 予算</button>
     </div>
   </div>
-
-  <!-- Menu Page -->
   <div class="page active" id="page-menu"></div>
-
-  <!-- Shopping Page -->
   <div class="page" id="page-shop"></div>
-
-  <!-- Budget / Info Page -->
   <div class="page" id="page-info"></div>
-
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
 
+  <script src="data.js"></script>
   <script>
-    // ===== DATA =====
-    const menuData = [
-      {
-        day: '月曜日', date: '3/2', emoji: '🌸',
-        title: '鶏と春野菜の和定食',
-        items: [
-          { type: '主食', icon: '🍚', name: '雑穀ごはん', detail: '' },
-          { type: '主菜', icon: '🥩', name: '<span class="highlight">鶏むね肉の西京焼き</span>', detail: '白味噌で漬けてしっとり柔らか' },
-          { type: '副菜①', icon: '🥬', name: '菜の花のからし和え', detail: '春の旬の一品' },
-          { type: '副菜②', icon: '🥕', name: 'にんじんとごぼうのきんぴら', detail: '' },
-          { type: '汁物', icon: '🍲', name: 'けんちん汁', detail: '大根・里芋・こんにゃく・豆腐' }
-        ],
-        nutrition: '鶏むね肉の高たんぱく低脂肪 ＋ 根菜で食物繊維 ＋ 菜の花でビタミンC・葉酸',
-        note: ''
-      },
-      {
-        day: '火曜日', date: '3/3', emoji: '🎎',
-        title: '鮭の幽庵焼き定食',
-        items: [
-          { type: '主食', icon: '🍚', name: '白ごはん', detail: '' },
-          { type: '主菜', icon: '🐟', name: '<span class="highlight">生鮭の幽庵焼き</span>', detail: '柚子・醤油・みりんで上品な香り' },
-          { type: '副菜①', icon: '🎃', name: 'かぼちゃの煮物', detail: '甘くほっくり' },
-          { type: '副菜②', icon: '🥗', name: 'ほうれん草の白和え', detail: '豆腐＋すりごま' },
-          { type: '汁物', icon: '🍲', name: '豆腐とわかめの味噌汁', detail: '' }
-        ],
-        nutrition: '鮭のアスタキサンチン＋DHA・EPA ＋ かぼちゃでβカロテン ＋ 白和えでカルシウム',
-        note: '🌸 ひなまつり！ちらし寿司やはまぐりお吸い物に変更もOK'
-      },
-      {
-        day: '水曜日', date: '3/4', emoji: '🐷',
-        title: '豚の生姜焼き定食',
-        items: [
-          { type: '主食', icon: '🍚', name: '雑穀ごはん', detail: '' },
-          { type: '主菜', icon: '🥩', name: '<span class="highlight">豚ロース肉の生姜焼き</span>', detail: '新たまねぎたっぷり' },
-          { type: '副菜①', icon: '🫘', name: 'ひじきと大豆の煮物', detail: '' },
-          { type: '副菜②', icon: '🥬', name: '春キャベツの浅漬け', detail: '' },
-          { type: '汁物', icon: '🍲', name: '小松菜と油揚げの味噌汁', detail: '' }
-        ],
-        nutrition: '豚肉のビタミンB1で疲労回復 ＋ ひじきで鉄分・食物繊維 ＋ 小松菜でカルシウム',
-        note: '💡 祖母向け：豚ロースは薄切りを使い、生姜の風味で食欲増進'
-      },
-      {
-        day: '木曜日', date: '3/5', emoji: '🐟',
-        title: 'ぶり大根定食',
-        items: [
-          { type: '主食', icon: '🍚', name: '白ごはん', detail: '' },
-          { type: '主菜', icon: '🐟', name: '<span class="highlight">ぶり大根</span>', detail: 'じっくり煮込んで味しみしみ' },
-          { type: '副菜①', icon: '🥦', name: 'ブロッコリーのおかか和え', detail: '' },
-          { type: '副菜②', icon: '🥬', name: 'かぶの千枚漬け風', detail: '薄切りで柔らか' },
-          { type: '汁物', icon: '🍲', name: 'なめこと三つ葉の味噌汁', detail: '' }
-        ],
-        nutrition: 'ぶりのDHA・EPA ＋ 大根の消化酵素 ＋ ブロッコリーでビタミンC',
-        note: ''
-      },
-      {
-        day: '金曜日', date: '3/6', emoji: '✨',
-        title: '鶏の治部煮風定食',
-        items: [
-          { type: '主食', icon: '🍚', name: '雑穀ごはん', detail: '' },
-          { type: '主菜', icon: '🥩', name: '<span class="highlight">鶏もも肉の治部煮風</span>', detail: 'すだれ麩・しいたけ・ほうれん草' },
-          { type: '副菜①', icon: '🍮', name: '茶碗蒸し', detail: '卵・えび・銀杏・三つ葉' },
-          { type: '副菜②', icon: '🥗', name: '切り干し大根のハリハリ漬け', detail: '' },
-          { type: '汁物', icon: '🍲', name: 'あさりの味噌汁', detail: '春の旬' }
-        ],
-        nutrition: '治部煮のとろみで体ぽかぽか ＋ 茶碗蒸しで良質たんぱく＋消化◎ ＋ あさりで鉄分・亜鉛',
-        note: '💡 治部煮は金沢の郷土料理。片栗粉をまぶした鶏肉がとろっとして祖母にも食べやすい'
-      },
-      {
-        day: '日曜日', date: '3/8', emoji: '🎉',
-        title: 'ちょっと特別な和風ごちそう定食',
-        items: [
-          { type: '主食', icon: '🍚', name: '白ごはん', detail: '' },
-          { type: '主菜', icon: '🥩', name: '<span class="highlight">和風ハンバーグ 大根おろしポン酢</span>', detail: '豆腐入りでふわふわ' },
-          { type: '副菜①', icon: '🥗', name: 'ポテトサラダ', detail: 'きゅうり・にんじん・ハム' },
-          { type: '副菜②', icon: '🥬', name: '小松菜とにんじんのごま和え', detail: '' },
-          { type: '汁物', icon: '🍲', name: 'かきたま汁', detail: '卵＋豆腐＋三つ葉' },
-          { type: 'デザート', icon: '🍮', name: 'さつまいもの蒸しようかん風', detail: 'やさしい甘さ' }
-        ],
-        nutrition: '豆腐入りハンバーグで脂質カット ＋ 大根おろしで消化促進 ＋ デザートでほっこり',
-        note: '💡 日曜日は少しだけ特別感を。豆腐ハンバーグは柔らかくて全世代◎'
-      }
-    ];
-
-    const shopData = [
-      {
-        category: '魚介類', emoji: '🐟',
-        items: [
-          { name: '生鮭 切り身', qty: '4切れ', day: '火' },
-          { name: 'ぶり 切り身', qty: '4切れ', day: '木' },
-          { name: 'あさり（殻付き）', qty: '300g', day: '金' },
-          { name: 'むきえび', qty: '8〜12尾', day: '金' }
-        ]
-      },
-      {
-        category: '肉類', emoji: '🥩',
-        items: [
-          { name: '鶏むね肉', qty: '400g', day: '月' },
-          { name: '鶏もも肉', qty: '400g', day: '金' },
-          { name: '豚ロース薄切り', qty: '400g', day: '水' },
-          { name: '合いびき肉', qty: '400g', day: '日' },
-          { name: 'ハム', qty: '4枚', day: '日' }
-        ]
-      },
-      {
-        category: '野菜・きのこ', emoji: '🥬',
-        items: [
-          { name: '菜の花', qty: '1束', day: '月' },
-          { name: 'にんじん', qty: '3本', day: '通' },
-          { name: 'ごぼう', qty: '1本', day: '月' },
-          { name: '大根', qty: '1本', day: '木日' },
-          { name: '里芋', qty: '4〜5個', day: '月' },
-          { name: 'かぼちゃ', qty: '1/4カット', day: '火' },
-          { name: 'ほうれん草', qty: '2束', day: '火金' },
-          { name: '新たまねぎ', qty: '3個', day: '水日' },
-          { name: '春キャベツ', qty: '1/2玉', day: '水' },
-          { name: '小松菜', qty: '2束', day: '水日' },
-          { name: 'ブロッコリー', qty: '1株', day: '木' },
-          { name: 'かぶ', qty: '2〜3個', day: '木' },
-          { name: 'なめこ', qty: '1パック', day: '木' },
-          { name: '生しいたけ', qty: '4〜6枚', day: '金' },
-          { name: '三つ葉', qty: '2束', day: '木〜日' },
-          { name: 'きゅうり', qty: '2本', day: '日' },
-          { name: 'じゃがいも', qty: '3〜4個', day: '日' },
-          { name: 'さつまいも', qty: '1本', day: '日' },
-          { name: 'しょうが', qty: '1かけ', day: '水他' },
-          { name: '長ねぎ', qty: '1本', day: '月' }
-        ]
-      },
-      {
-        category: '豆腐・大豆製品', emoji: '🫘',
-        items: [
-          { name: '木綿豆腐', qty: '2丁', day: '月火' },
-          { name: '絹ごし豆腐', qty: '2丁', day: '日' },
-          { name: '油揚げ', qty: '2枚', day: '水' },
-          { name: '大豆水煮', qty: '1パック', day: '水' },
-          { name: 'すだれ麩（お麩）', qty: '4枚', day: '金' }
-        ]
-      },
-      {
-        category: '卵・乳製品', emoji: '🥚',
-        items: [
-          { name: '卵', qty: '10個パック', day: '金日' },
-          { name: 'マヨネーズ', qty: '在庫確認', day: '日' }
-        ]
-      },
-      {
-        category: '海藻・乾物', emoji: '🌊',
-        items: [
-          { name: 'わかめ（乾燥）', qty: '1袋', day: '火' },
-          { name: 'ひじき（乾燥）', qty: '1袋', day: '水' },
-          { name: '切り干し大根', qty: '1袋', day: '金' },
-          { name: 'こんにゃく', qty: '1枚', day: '月' },
-          { name: '銀杏（水煮缶）', qty: '1缶', day: '金' }
-        ]
-      },
-      {
-        category: '穀類', emoji: '🍚',
-        items: [
-          { name: '雑穀ミックス', qty: '1袋', day: '月水金' },
-          { name: '白米', qty: '在庫確認', day: '通' }
-        ]
-      },
-      {
-        category: '調味料（在庫確認）', emoji: '🫙',
-        items: [
-          { name: '白味噌（西京味噌）', qty: '適量', day: '月' },
-          { name: '合わせ味噌', qty: '適量', day: '毎日' },
-          { name: 'ポン酢', qty: '適量', day: '日' },
-          { name: '柚子', qty: '1個', day: '火' },
-          { name: 'からし（チューブ）', qty: '適量', day: '月' },
-          { name: 'パン粉', qty: '適量', day: '日' },
-          { name: 'すりごま（白）', qty: '適量', day: '火日' },
-          { name: 'かつお節', qty: '小分け', day: '木' }
-        ]
-      }
-    ];
-
-    const budgetData = [
-      { icon: '🐟', name: '魚介類', min: 2500, max: 3000, color: '#4cc9f0' },
-      { icon: '🥩', name: '肉類', min: 2000, max: 2500, color: '#ff6b35' },
-      { icon: '🥬', name: '野菜・きのこ', min: 2500, max: 3000, color: '#06d6a0' },
-      { icon: '🫘', name: '豆腐・卵・乳', min: 800, max: 1000, color: '#ffd166' },
-      { icon: '🌊', name: '乾物・海藻', min: 500, max: 700, color: '#9b5de5' },
-      { icon: '🍚', name: '穀類', min: 300, max: 500, color: '#ff4d6d' },
-      { icon: '🫙', name: '調味料（補充分）', min: 500, max: 1000, color: '#e8e8f0' }
-    ];
-
-    // ===== STATE =====
-    const STORAGE_KEY = 'myao_shopping_2026_03_w1';
+    const STORAGE_KEY = 'myao_shopping_2026_03';
     let checkedItems = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    let currentWeek = 0;
     let totalItems = 0;
 
-    // ===== RENDER MENU =====
+    // Auto-select current week based on date
+    (function () {
+      const now = new Date();
+      const m = now.getMonth(), d = now.getDate(), y = now.getFullYear();
+      if (y === 2026 && m === 2) {
+        if (d >= 30) currentWeek = 4;
+        else if (d >= 23) currentWeek = 3;
+        else if (d >= 16) currentWeek = 2;
+        else if (d >= 9) currentWeek = 1;
+        else currentWeek = 0;
+      }
+    })();
+
+    // Week selector
+    function renderWeeks() {
+      document.getElementById('weekSelector').innerHTML = WEEKS.map((w, i) =>
+        `<button class="week-btn${i === currentWeek ? ' active' : ''}" onclick="switchWeek(${i})">${w.label}<br><span style="font-size:10px;font-weight:400">${w.range}</span></button>`
+      ).join('');
+    }
+    function switchWeek(i) {
+      currentWeek = i;
+      renderWeeks(); renderMenu(); renderShopping();
+    }
+
+    // Menu
     function renderMenu() {
-      const container = document.getElementById('page-menu');
-      container.innerHTML = menuData.map((d, i) => `
+      const week = menuData[currentWeek];
+      document.getElementById('page-menu').innerHTML = week.map((d, i) => `
         <div class="day-card${i === 0 ? ' open' : ''}" data-day="${i}">
           <div class="day-header" onclick="toggleDay(${i})">
             <div class="day-header-left">
               <div class="day-emoji">${d.emoji}</div>
               <div class="day-info">
-                <h3>${d.day}（${d.date}）</h3>
+                <h3>${d.day}曜（${d.date}）<span class="day-tag ${d.tag}">${d.tag}</span></h3>
                 <div class="day-subtitle">${d.title}</div>
               </div>
             </div>
             <div class="day-chevron">▼</div>
           </div>
-          <div class="day-body">
-            <div class="day-menu">
-              ${d.items.map(item => `
-                <div class="menu-item">
-                  <div class="menu-icon">${item.icon}</div>
-                  <div class="menu-content">
-                    <div class="menu-label">${item.type}</div>
-                    <div class="menu-name">${item.name}</div>
-                    ${item.detail ? `<div class="menu-detail">${item.detail}</div>` : ''}
-                  </div>
+          <div class="day-body"><div class="day-menu">
+            ${d.items.map(it => `
+              <div class="menu-item">
+                <div class="menu-icon">${it.icon}</div>
+                <div class="menu-content">
+                  <div class="menu-label">${it.type}</div>
+                  <div class="menu-name">${it.name}</div>
+                  ${it.detail ? `<div class="menu-detail">${it.detail}</div>` : ''}
                 </div>
-              `).join('')}
-              <div class="nutrition-badge">
-                <p>🌿 ${d.nutrition}</p>
-              </div>
-              ${d.note ? `<div class="special-note">${d.note}</div>` : ''}
-            </div>
-          </div>
-        </div>
-      `).join('');
+              </div>`).join('')}
+            <div class="nutrition-badge"><p>🌿 ${d.nutrition}</p></div>
+            ${d.note ? `<div class="special-note">${d.note}</div>` : ''}
+          </div></div>
+        </div>`).join('');
     }
+    function toggleDay(i) { document.querySelector(`.day-card[data-day="${i}"]`).classList.toggle('open') }
 
-    function toggleDay(i) {
-      const card = document.querySelector(`.day-card[data-day="${i}"]`);
-      card.classList.toggle('open');
-    }
-
-    // ===== RENDER SHOPPING =====
+    // Shopping
     function renderShopping() {
+      const week = shopData[currentWeek];
       totalItems = 0;
-      shopData.forEach(cat => totalItems += cat.items.length);
+      week.forEach(c => totalItems += c.items.length);
+      const wk = currentWeek;
+      const checkedCount = Object.keys(checkedItems).filter(k => k.startsWith(wk + '-') && checkedItems[k]).length;
+      const pct = totalItems > 0 ? Math.round(checkedCount / totalItems * 100) : 0;
 
-      const checkedCount = Object.values(checkedItems).filter(Boolean).length;
-      const pct = totalItems > 0 ? Math.round((checkedCount / totalItems) * 100) : 0;
-
-      const container = document.getElementById('page-shop');
-      container.innerHTML = `
+      document.getElementById('page-shop').innerHTML = `
         <div class="shop-progress">
           <div class="progress-header">
-            <span class="progress-label">🐱 お買い物の進捗</span>
-            <span class="progress-count">${checkedCount} / ${totalItems} 品目（${pct}%）</span>
+            <span class="progress-label">🐱 ${WEEKS[wk].label}のお買い物</span>
+            <span class="progress-count">${checkedCount}/${totalItems}品（${pct}%）</span>
           </div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: ${pct}%"></div>
-          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
         </div>
         <div class="shop-actions">
-          <button class="action-btn" onclick="uncheckAll()">↩️ 全リセット</button>
-          <button class="action-btn" onclick="checkAllItems()">✅ 全チェック</button>
+          <button class="action-btn" onclick="uncheckWeek()">↩️ リセット</button>
+          <button class="action-btn" onclick="checkAllWeek()">✅ 全チェック</button>
         </div>
-        ${shopData.map((cat, ci) => {
-          const catChecked = cat.items.filter((_, ii) => checkedItems[`${ci}-${ii}`]).length;
-          return `
-          <div class="shop-category">
+        ${week.map((cat, ci) => {
+        const cc = cat.items.filter((_, ii) => checkedItems[`${wk}-${ci}-${ii}`]).length;
+        return `<div class="shop-category">
             <div class="category-header">
-              <div class="category-header-left">
-                <span class="category-emoji">${cat.emoji}</span>
-                <span class="category-title">${cat.category}</span>
-              </div>
-              <span class="category-count">${catChecked}/${cat.items.length}</span>
+              <div class="category-header-left"><span class="category-emoji">${cat.emoji}</span><span class="category-title">${cat.category}</span></div>
+              <span class="category-count">${cc}/${cat.items.length}</span>
             </div>
-            <div class="category-items">
-              ${cat.items.map((item, ii) => {
-                const key = `${ci}-${ii}`;
-                const checked = checkedItems[key];
-                return `
-                <div class="shop-item${checked ? ' checked' : ''}" onclick="toggleCheck('${key}', this)">
-                  <div class="checkbox">
-                    <svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"></polyline></svg>
-                  </div>
-                  <div class="item-info">
-                    <div class="item-name">${item.name}</div>
-                    <div class="item-qty">${item.qty}</div>
-                  </div>
-                  <div class="item-day">${item.day}</div>
-                </div>`;
-              }).join('')}
-            </div>
-          </div>`;
-        }).join('')}
-      `;
-
+            <div class="category-items">${cat.items.map((it, ii) => {
+          const key = `${wk}-${ci}-${ii}`, chk = checkedItems[key];
+          return `<div class="shop-item${chk ? ' checked' : ''}" onclick="toggleCheck('${key}',this)">
+                <div class="checkbox"><svg viewBox="0 0 24 24"><polyline points="4 12 10 18 20 6"></polyline></svg></div>
+                <div class="item-info"><div class="item-name">${it.name}</div><div class="item-qty">${it.qty}</div></div>
+                <div class="item-day">${it.day}</div>
+              </div>`;
+        }).join('')}</div></div>`;
+      }).join('')}`;
       updateBadge();
     }
-
     function toggleCheck(key, el) {
       checkedItems[key] = !checkedItems[key];
       localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedItems));
-
-      const checkbox = el.querySelector('.checkbox');
-      checkbox.classList.add('check-animate');
-      setTimeout(() => checkbox.classList.remove('check-animate'), 300);
-
+      el.querySelector('.checkbox').classList.add('check-animate');
+      setTimeout(() => el.querySelector('.checkbox').classList.remove('check-animate'), 300);
       renderShopping();
     }
-
-    function uncheckAll() {
-      checkedItems = {};
+    function uncheckWeek() {
+      Object.keys(checkedItems).filter(k => k.startsWith(currentWeek + '-')).forEach(k => delete checkedItems[k]);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedItems));
-      renderShopping();
-      showToast('🐱 チェックをリセットしたにゃ');
+      renderShopping(); showToast('🐱 リセットしたにゃ');
     }
-
-    function checkAllItems() {
-      shopData.forEach((cat, ci) => {
-        cat.items.forEach((_, ii) => {
-          checkedItems[`${ci}-${ii}`] = true;
-        });
-      });
+    function checkAllWeek() {
+      shopData[currentWeek].forEach((c, ci) => c.items.forEach((_, ii) => { checkedItems[`${currentWeek}-${ci}-${ii}`] = true }));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(checkedItems));
-      renderShopping();
-      showToast('✅ 全品チェック完了にゃ！');
+      renderShopping(); showToast('✅ 全チェック完了にゃ！');
     }
-
     function updateBadge() {
-      const remaining = totalItems - Object.values(checkedItems).filter(Boolean).length;
-      const badge = document.getElementById('shopBadge');
-      badge.textContent = remaining;
+      const wk = currentWeek, week = shopData[wk];
+      let t = 0; week.forEach(c => t += c.items.length);
+      const r = t - Object.keys(checkedItems).filter(k => k.startsWith(wk + '-') && checkedItems[k]).length;
+      document.getElementById('shopBadge').textContent = r;
     }
 
-    // ===== RENDER BUDGET =====
+    // Budget
     function renderBudget() {
-      const totalMin = budgetData.reduce((s, b) => s + b.min, 0);
-      const totalMax = budgetData.reduce((s, b) => s + b.max, 0);
-      const maxVal = Math.max(...budgetData.map(b => b.max));
-
+      const tMin = budgetData.reduce((s, b) => s + b.min, 0), tMax = budgetData.reduce((s, b) => s + b.max, 0);
+      const mx = Math.max(...budgetData.map(b => b.max));
       document.getElementById('page-info').innerHTML = `
         <div class="budget-card">
           <div class="budget-total">
-            <div class="label">6日分・4人前 概算予算</div>
-            <div class="amount">¥${totalMin.toLocaleString()}〜${totalMax.toLocaleString()}</div>
+            <div class="label">1週間分（6日・4人前）概算</div>
+            <div class="amount">¥${tMin.toLocaleString()}〜${tMax.toLocaleString()}</div>
           </div>
-          <div class="budget-breakdown">
-            ${budgetData.map(b => `
-              <div>
-                <div class="budget-row">
-                  <div class="icon">${b.icon}</div>
-                  <div class="name">${b.name}</div>
-                  <div class="price">¥${b.min.toLocaleString()}〜${b.max.toLocaleString()}</div>
-                </div>
-                <div class="budget-bar">
-                  <div class="budget-bar-fill" style="width: ${Math.round(b.max / maxVal * 100)}%; background: ${b.color};"></div>
-                </div>
-              </div>
-            `).join('')}
+          <div class="budget-breakdown">${budgetData.map(b => `
+            <div><div class="budget-row">
+              <div class="icon">${b.icon}</div><div class="name">${b.name}</div>
+              <div class="price">¥${b.min.toLocaleString()}〜${b.max.toLocaleString()}</div>
+            </div><div class="budget-bar"><div class="budget-bar-fill" style="width:${Math.round(b.max / mx * 100)}%;background:${b.color}"></div></div></div>`).join('')}
           </div>
         </div>
-
-        <div class="tip-card">
-          <h4>📅 おすすめ買い出しスケジュール</h4>
-          <div class="schedule-item">
-            <div class="schedule-day">日曜 or 月曜朝</div>
-            <div class="schedule-desc">野菜全般・肉類・豆腐・乾物・調味料をまとめ買い</div>
-          </div>
-          <div class="schedule-item">
-            <div class="schedule-day">水曜頃</div>
-            <div class="schedule-desc">木曜のぶり・なめこ・三つ葉（鮮度補充）</div>
-          </div>
-          <div class="schedule-item">
-            <div class="schedule-day">金曜</div>
-            <div class="schedule-desc">あさり・えび（当日使用分）／日曜のひき肉</div>
-          </div>
+        <div class="tip-card"><h4>📅 買い出しスケジュール</h4>
+          <div class="schedule-item"><div class="schedule-day">週はじめ</div><div class="schedule-desc">野菜・肉・豆腐・乾物をまとめ買い</div></div>
+          <div class="schedule-item"><div class="schedule-day">週なか</div><div class="schedule-desc">魚の鮮度補充（木〜金用）</div></div>
+          <div class="schedule-item"><div class="schedule-day">金曜</div><div class="schedule-desc">週末用の鮮度が大事な食材</div></div>
         </div>
-
-        <div class="tip-card">
-          <h4>🧓 祖母への配慮メモ</h4>
-          <div class="schedule-item">
-            <div class="schedule-desc">
-              ・柔らか調理を基本に（煮物・蒸し物・とろみ付け）<br>
-              ・味付けは減塩を意識（だしをしっかり効かせる）<br>
-              ・豆腐ハンバーグ・治部煮は特に食べやすい◎<br>
-              ・小さめにカットして一口で食べられるように
-            </div>
-          </div>
+        <div class="tip-card"><h4>🧓 祖母への配慮メモ</h4>
+          <div class="schedule-item"><div class="schedule-desc">
+            ・柔らかい調理法を基本に（煮物・蒸し・とろみ）<br>
+            ・味付けは減塩（だしをしっかり効かせる）<br>
+            ・一口サイズにカットして食べやすく<br>
+            ・洋食の日はシチュー系が食べやすい◎
+          </div></div>
         </div>
-
-        <div class="tip-card">
-          <h4>🌿 一週間の栄養バランス</h4>
-          <div class="schedule-item">
-            <div class="schedule-desc">
-              <strong>たんぱく質</strong>：鶏むね・鶏もも・豚ロース・鮭・ぶり・卵・豆腐<br>
-              <strong>カルシウム</strong>：小松菜・豆腐・白和え・ひじき・ごま<br>
-              <strong>鉄分</strong>：ひじき・小松菜・あさり・ほうれん草<br>
-              <strong>DHA/EPA</strong>：鮭・ぶり（週2回の魚で脳と血管の健康）<br>
-              <strong>食物繊維</strong>：雑穀・根菜・ひじき・切り干し大根<br>
-              <strong>ビタミンC</strong>：菜の花・ブロッコリー・春キャベツ<br>
-              <strong>発酵食品</strong>：味噌汁（毎日）・浅漬け・白味噌
-            </div>
-          </div>
-        </div>
-      `;
+        <div class="tip-card"><h4>🌿 栄養バランス</h4>
+          <div class="schedule-item"><div class="schedule-desc">
+            <b>たんぱく質</b>：鶏・豚・牛・鮭・さば・豆腐<br>
+            <b>カルシウム</b>：小松菜・豆腐・ごま・チーズ<br>
+            <b>鉄分</b>：ひじき・小松菜・あさり・牛肉<br>
+            <b>DHA/EPA</b>：鮭・さば・いわし・あじ<br>
+            <b>食物繊維</b>：雑穀・根菜・ひじき・きのこ<br>
+            <b>発酵食品</b>：味噌汁・浅漬け・白味噌
+          </div></div>
+        </div>`;
     }
 
-    // ===== TAB SWITCH =====
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-      document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
-      document.getElementById(`page-${tabId}`).classList.add('active');
-    }
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn =>
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(`page-${btn.dataset.tab}`).classList.add('active');
+      })
+    );
 
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-    });
+    // Toast
+    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000) }
 
-    // ===== TOAST =====
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-
-    // ===== INIT =====
-    renderMenu();
-    renderShopping();
-    renderBudget();
+    // Init
+    renderWeeks(); renderMenu(); renderShopping(); renderBudget();
   </script>
 </body>
+
 </html>
